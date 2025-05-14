@@ -5,6 +5,8 @@ type Language = 'pt' | 'en'
 
 function getBotRandomResponse(category: Category, lang: Language) {
   const responses = botResponse[category]
+  if (!responses) return 'Desculpe, não entendi 😅'
+  
   const random = Math.floor(Math.random() * responses.length)
 
   return responses[random][lang]

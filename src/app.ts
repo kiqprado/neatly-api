@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 
-import cors from 'cors'
+import cors from '@fastify/cors'
 
 import { WebChatRoutes } from './routes/web-chat-routes'
 
