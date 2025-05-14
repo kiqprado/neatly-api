@@ -12,8 +12,9 @@ export async function MessageHandlerController(req: FastifyRequest, reply: Fasti
   }
 
   const { content, language = 'pt' } = parsed.data
+  const sessionId = req.ip
 
-  const response = HandleWebChat(content, language)
+  const response = await HandleWebChat(content, language, sessionId)
 
   return reply.status(200).send({
     sender: 'bot',
