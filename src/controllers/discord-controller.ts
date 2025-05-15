@@ -2,7 +2,7 @@
 import { Client, Message } from 'discord.js'
 import { HandleDiscordMessage } from '../bots/discord'
 
-export function setupDiscordBot() {
+export function SetupDiscordBot() {
   const client = new Client({
     intents: ['Guilds', 'GuildMessages', 'MessageContent']
   })

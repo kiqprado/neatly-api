@@ -5,7 +5,8 @@ import cors from '@fastify/cors'
 import { config } from 'dotenv'
 
 import { WebChatRoutes } from './routes/web-chat-routes'
-import { setupDiscordBot } from './controllers/discord-controller'
+import { SetupDiscordBot } from './controllers/discord-controller'
+import { SetupTelegramBot } from './controllers/telegram-controller'
 
 config()
 
@@ -18,9 +19,13 @@ async function StartServer() {
 
   app.register(WebChatRoutes)
 
-  const discordBot = setupDiscordBot()
+  const discordBot = SetupDiscordBot()
   await discordBot.login(process.env.DISCORD_TOKEN)
-  console.log('Discord bot conectado!')
+
+  const telegramBot = SetupTelegramBot()
+
+  console.log('Discord Bot Running on Server!')
+  console.log(`${telegramBot} is running`)
 
   try {
     await app.listen({ port: 3333, host: '0.0.0.0'})
