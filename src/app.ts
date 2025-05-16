@@ -7,6 +7,7 @@ import { config } from 'dotenv'
 import { WebChatRoutes } from './routes/web-chat-routes'
 import { SetupDiscordBot } from './controllers/discord-controller'
 import { SetupTelegramBot } from './controllers/telegram-controller'
+import { WebHookHandler } from './controllers/whatsapp-controller'
 
 config()
 
@@ -23,6 +24,9 @@ async function StartServer() {
   await discordBot.login(process.env.DISCORD_TOKEN)
 
   const telegramBot = SetupTelegramBot()
+
+  app.get('/webhook', WebHookHandler);
+  app.post('/webhook', WebHookHandler);
 
   console.log('Discord Bot Running on Server!')
   console.log(`${telegramBot} is running`)
