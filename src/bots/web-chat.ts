@@ -1,22 +1,12 @@
-import { botResponse } from '../utils/bot-responses'
-
 import { NormalizeListInput } from '../utils/normalize-list'
 
 import { OrganizeItemsByCategory } from '../services/organize-list'
 
 import { GetSession, ResetSession } from '../session/session-store'
 
-type Category = keyof typeof botResponse
+import { GetRandomBotResponse } from '../services/random-response'
+
 type Language = 'pt' | 'en'
-
-function getBotRandomResponse(category: Category, lang: Language) {
-  const responses = botResponse[category]
-  if (!responses) return 'Desculpe, não entendi 😅'
-  
-  const random = Math.floor(Math.random() * responses.length)
-
-  return responses[random][lang]
-}
 
 export async function HandleWebChat(
   message: string, 
@@ -29,7 +19,7 @@ export async function HandleWebChat(
   if (text.includes('oi') || 
       text.includes('olá') || 
       text.includes('e aí')) {
-    return getBotRandomResponse('intro', lang)
+    return GetRandomBotResponse('intro', lang)
   }
 
   if (text.includes('organiza') || 
@@ -37,7 +27,7 @@ export async function HandleWebChat(
       text.includes('organize')) {
     session.collectingList = true
     session.listItems = []
-    return getBotRandomResponse('starting', lang)
+    return GetRandomBotResponse('starting', lang)
   }
 
   if (text.includes('pronto') || 
@@ -87,5 +77,5 @@ export async function HandleWebChat(
     return `Anotado: ${items.join(', ')}`
   }
 
-  return getBotRandomResponse('offTopic', lang)
+  return GetRandomBotResponse('offTopic', lang)
 }
