@@ -48,6 +48,12 @@ export async function HandleTelegramChat(
     }
   }
 
+  if (text.includes('apresente-se') || 
+      text.includes('quem é você') || 
+      text.includes('me fale sobre você')) {
+    return GetRandomBotResponse('introductionNeatly', lang)
+  }
+
   if (text.includes('oi') || text.includes('olá') || text.includes('e aí')) {
     return GetRandomBotResponse('intro', lang)
   }
@@ -58,7 +64,7 @@ export async function HandleTelegramChat(
     return GetRandomBotResponse('starting', lang)
   }
 
-  if (text.includes('pronto') || text.includes('tá pronto') || 
+  if (text.includes('pronto') || text.includes('comece') || 
       text.includes('terminei') || text.includes('acabou') || text === '/pronto') {
     if (!session.collectingList) {
       return 'ℹ️ Você ainda não começou sua lista.'
@@ -97,6 +103,14 @@ export async function HandleTelegramChat(
     const items = NormalizeListInput(text)
     session.listItems.push(...items)
     return `✅ Anotado: ${items.join(', ')}`
+  }
+
+  if (text.includes('já fez?') || 
+      text.includes('Fazendo?') || 
+      text.includes('cadê?')) {
+    session.collectingList = true
+    session.listItems = []
+    return GetRandomBotResponse('organizing', lang)
   }
 
   return GetRandomBotResponse('offTopic', lang)

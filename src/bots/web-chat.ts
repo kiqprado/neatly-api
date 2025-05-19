@@ -16,6 +16,12 @@ export async function HandleWebChat(
   const session = GetSession(sessionId)
   const text = message.toLowerCase()
 
+  if (text.includes('apresente-se') || 
+      text.includes('quem é você') || 
+      text.includes('me fale sobre você')) {
+    return GetRandomBotResponse('introductionNeatly', lang)
+  }
+
   if (text.includes('oi') || 
       text.includes('olá') || 
       text.includes('e aí')) {
@@ -31,9 +37,8 @@ export async function HandleWebChat(
   }
 
   if (text.includes('pronto') || 
-      text.includes('tá pronto') || 
-      text.includes('terminei') || 
-      text.includes('acabou')) {
+      text.includes('comece') || 
+      text.includes('terminei')) {
     if (!session.collectingList) {
       return 'Você ainda não começou sua lista.'
     }
@@ -75,6 +80,14 @@ export async function HandleWebChat(
     const items = NormalizeListInput(text)
     session.listItems.push(...items)
     return `Anotado: ${items.join(', ')}`
+  }
+
+  if (text.includes('já fez?') || 
+      text.includes('Fazendo?') || 
+      text.includes('cadê?')) {
+    session.collectingList = true
+    session.listItems = []
+    return GetRandomBotResponse('organizing', lang)
   }
 
   return GetRandomBotResponse('offTopic', lang)

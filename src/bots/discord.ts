@@ -16,6 +16,12 @@ export async function HandleDiscordMessage(
   const session = GetSession(sessionId)
   const text = message.toLowerCase()
 
+  if (text.includes('apresente-se') || 
+      text.includes('quem é você') || 
+      text.includes('me fale sobre você')) {
+    return GetRandomBotResponse('introductionNeatly', lang)
+  }
+
   if (text.includes('oi') || 
       text.includes('olá') || 
       text.includes('e aí')) {
@@ -82,6 +88,14 @@ export async function HandleDiscordMessage(
     const items = NormalizeListInput(text)
     session.listItems.push(...items)
     return `Anotado: ${items.join(', ')}`
+  }
+
+  if (text.includes('já fez?') || 
+      text.includes('Fazendo?') || 
+      text.includes('cadê?')) {
+    session.collectingList = true
+    session.listItems = []
+    return GetRandomBotResponse('organizing', lang)
   }
 
   return GetRandomBotResponse('offTopic', lang)
