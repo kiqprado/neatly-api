@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "migrations": "npx prisma migrate dev --name category_and_items",
     "seed": "ts-node prisma/seed.ts",
     "bot:discord": "ts-node src/bots/discord.ts"
   },
