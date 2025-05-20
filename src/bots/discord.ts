@@ -1,3 +1,7 @@
+import { Language } from '../utils/Language'
+
+import { MatchesRegexInput } from '../services/matches-regex-input'
+
 import { NormalizeListInput } from '../utils/normalize-list'
 
 import { OrganizeItemsByCategory } from '../services/organize-list'
@@ -6,40 +10,30 @@ import { GetSession, ResetSession } from '../session/session-store'
 
 import { GetRandomBotResponse } from '../services/random-response'
 
-type Language = 'pt' | 'en'
-
 export async function HandleDiscordMessage(
   message: string,
   lang: Language,
   sessionId: string
 ): Promise<string> {
+
   const session = GetSession(sessionId)
   const text = message.toLowerCase()
 
-  if (text.includes('apresente-se') || 
-      text.includes('quem é você') || 
-      text.includes('me fale sobre você')) {
+  if (MatchesRegexInput(text, 'introduction_neatly', lang)) {
     return GetRandomBotResponse('introductionNeatly', lang)
   }
 
-  if (text.includes('oi') || 
-      text.includes('olá') || 
-      text.includes('e aí')) {
+  if (MatchesRegexInput(text, 'intro', lang)) {
     return GetRandomBotResponse('intro', lang)
   }
 
-  if (text.includes('organiza') || 
-      text.includes('lista') || 
-      text.includes('organize')) {
+  if (MatchesRegexInput(text, 'organize', lang)) {
     session.collectingList = true
     session.listItems = []
     return GetRandomBotResponse('starting', lang)
   }
 
-  if (text.includes('pronto') || 
-      text.includes('tá pronto') || 
-      text.includes('terminei') || 
-      text.includes('acabou')) {
+  if (MatchesRegexInput(text, 'Ready', lang)) {
     if (!session.collectingList) {
       return 'Você ainda não começou sua lista.'
     }
@@ -90,9 +84,7 @@ export async function HandleDiscordMessage(
     return `Anotado: ${items.join(', ')}`
   }
 
-  if (text.includes('já fez?') || 
-      text.includes('Fazendo?') || 
-      text.includes('cadê?')) {
+  if (MatchesRegexInput(text, 'status_check', lang)) {
     session.collectingList = true
     session.listItems = []
     return GetRandomBotResponse('organizing', lang)
