@@ -10,7 +10,6 @@ import { GetSession, ResetSession } from '../session/session-store'
 
 import { GetRandomBotResponse } from '../services/random-response'
 
-
 export async function HandleWebChat(
   message: string,
   lang: Language,
