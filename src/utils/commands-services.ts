@@ -1,24 +1,12 @@
-type CommandResponse = {
-  pt: string
-  en: string
-}
-
-interface ICommandPattern {
+interface ICommandServices {
   triggers: string[]
-  responses: CommandResponse
+  responses: {
+    pt: string
+    en: string
+  }
 }
 
-interface ICommandsServices extends Record<string, ICommandPattern> {
-  start: ICommandPattern
-  help: ICommandPattern
-  list: ICommandPattern
-  clear: ICommandPattern
-  ready: ICommandPattern
-}
-
-export type CommandKey = keyof ICommandsServices
-
-export const CommandServices: ICommandsServices = {
+export const CommandServices: { [key: string]: ICommandServices } = {
   start: {
     triggers: [
       '/start', '/inicio', '/begin', '!start', '!inicio', '!begin'

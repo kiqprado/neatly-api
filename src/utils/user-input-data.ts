@@ -1,20 +1,4 @@
-type LanguagePattern = {
-  pt: RegExp;
-  en: RegExp;
-}
-
-interface RegexPatternsData extends Record<string, LanguagePattern> {
-  introduction_neatly: LanguagePattern
-  intro: LanguagePattern
-  organize: LanguagePattern
-  ready: LanguagePattern
-  status_check: LanguagePattern
-}
-
-export type PatternKey = keyof RegexPatternsData
-
-export const RegexInputDataBot: RegexPatternsData = {
-
+export const UserInputDataRegex = {
   introduction_neatly: {
     pt: /(?:apresente\s?-?\s?se|apresenta\s?-?\s?se|se\s+apresente|se\s+apresenta|quem\s+(?:é|e|eh|são)\s+(?:vc|voce|você|voces|vcs)(?:\s+mesmo)?\??|me\s+(?:fale|conte|diga|explique)\s+(?:um\s+pouco\s+)?(?:sobre|da?o?)\s+(?:vc|voce|você)|qual\s+(?:é|e|são)\s+(?:sua|suas|seu)\s+(?:função|funções|identidade|hist[óo]rico?|origem)|poderia\s+(?:se\s+)?apresentar(?:\s?-?\s?se)?)/i,
     en: /(?:introduce\s+yourself|describe\s+yourself|who\s+are\s+you\??|what\s+are\s+you\??|tell\s+me\s+(?:about\s+)?yourself|your\s+(?:identity|function|purpose)|can\s+you\s+introduce\s+yourself|brief\s+introduction)/i

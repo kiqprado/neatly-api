@@ -1,6 +1,8 @@
-// src/bots/discord-bot.ts
 import { Client, Message } from 'discord.js'
+
 import { HandleDiscordMessage } from '../bots/discord'
+
+import { Language } from '../utils/Language'
 
 export function SetupDiscordBot() {
   const client = new Client({
@@ -14,11 +16,13 @@ export function SetupDiscordBot() {
   client.on('messageCreate', async (message: Message) => {
     if (message.author.bot) return
 
+    const lang: Language = 'pt'
+
     const isCommand = message.content.startsWith('!')
     
     const response = await HandleDiscordMessage(
       message.content,
-      'pt',
+      lang,
       message.author.id
     )
 

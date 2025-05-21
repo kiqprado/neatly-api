@@ -1,4 +1,4 @@
-import { botResponse } from '../utils/bot-responses'
+import { botResponse } from '../utils/bot-responses-data'
 
 type Category = keyof typeof botResponse
 type Language = 'pt' | 'en'
