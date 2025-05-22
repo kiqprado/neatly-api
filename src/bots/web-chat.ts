@@ -16,6 +16,7 @@ export async function HandleWebChat(
   sessionId: string
 ): Promise<string> {
   const session = GetSession(sessionId)
+  
   const text = message.toLowerCase()
 
   const matchedKey = MatchesRegexInput(text, lang)

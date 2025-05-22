@@ -16,7 +16,9 @@ export async function HandleDiscordMessage(
   sessionId: string
 ): Promise<string> {
   const session = GetSession(sessionId)
+  
   const text = message.toLowerCase()
+
   const matchedKey = MatchesRegexInput(text, lang)
 
   switch (matchedKey) {

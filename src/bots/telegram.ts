@@ -18,6 +18,7 @@ export async function HandleTelegramChat(
   userId: string
 ): Promise<string> {
   const session = GetSession(userId)
+  
   const text = message.toLowerCase()
 
   const commandResponse = IsCommandData(text, lang)
