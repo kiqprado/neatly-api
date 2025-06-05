@@ -4,6 +4,7 @@ import { config } from 'dotenv'
 
 import { WebChatRoutes } from './routes/web-chat-routes'
 import { MessageTelegramController} from './controller/telegram-controller'
+import { MessageDiscordController } from './controller/discord-controller'
 
 config()
 
@@ -16,6 +17,10 @@ async function StartServer() {
 
   app.register(WebChatRoutes)
   const telegramBot = MessageTelegramController()
+  const discordBot = MessageDiscordController()
+  await discordBot.login(process.env.DISCORD_TOKEN)
+
+  console.log('Discord Bot Running on Server!')
   console.log(`${telegramBot} is running`)
 
   const PORT = 3333

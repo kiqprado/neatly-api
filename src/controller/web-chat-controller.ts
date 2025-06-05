@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { MessageInputSchema } from '../services/message-input-schema'
-import { HandleWebChat } from '../bots/web-chat-bot'
+import { HandleWebChatBot } from '../bots/web-chat-bot'
 
 export async function MessageWebChatHandlerController(req: FastifyRequest, reply: FastifyReply) {
   const parsed = MessageInputSchema.safeParse(req.body)
@@ -12,7 +12,7 @@ export async function MessageWebChatHandlerController(req: FastifyRequest, reply
   const { content, language = 'pt' } = parsed.data
   const sessionId = req.ip
 
-  const response = await HandleWebChat(content, language, sessionId)
+  const response = await HandleWebChatBot(content, language, sessionId)
 
   return reply.status(200).send({
     sender: 'bot',

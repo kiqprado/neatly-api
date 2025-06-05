@@ -1,11 +1,12 @@
 import { Language } from '../utils/language-pack'
-import { GetChatSessionStore, ResetChatSessionStore } from '../session/chat-session-store'
+import { GetChatSessionStore, ResetChatSessionStore} from '../session/chat-session-store'
 import { MatchRegexDataInput } from '../services/matches-regex-data-input'
 import { NormalizeItemsOnList } from '../services/normalize-items-on-list'
 import { OrganizeListItemsByCategory } from '../services/organize-list'
 import { GetRandomBotResponse } from '../services/get-random-bot-response'
 
-export async function HandleWebChatBot(
+
+export async function HandleDiscordBot(
   message: string,
   lang: Language,
   sessionId: string
@@ -26,44 +27,24 @@ export async function HandleWebChatBot(
       session.listItems = []
       return GetRandomBotResponse('starting', lang)
 
+    case 'status_check':
+      if (session.isCollectingList) {
+        return GetRandomBotResponse('organizing', lang)
+      } else {
+        return 'No momento não estou organizando nenhuma lista.'
+      }
+
     case 'ready':
-      if (!session.isCollectingList) {
-        return 'Você ainda não começou sua lista.'
+      if (!session.isCollectingList || session.listItems.length === 0) {
+        return 'Você ainda não começou ou não me mandou nenhum item pra organizar.'
       }
 
       session.isCollectingList = false
       const organized = await OrganizeListItemsByCategory(session.listItems, lang)
       ResetChatSessionStore(sessionId)
 
-      const allRaw = session.listItems.map(i =>
-        i.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
-      )
-
-      const used = Object.values(organized).flat().map(i =>
-        i.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
-      )
-
-      const outros = allRaw.filter(i => !used.includes(i))
-
-      let response = '🧾 Lista organizada:\n\n'
-
-      for (const [category, items] of Object.entries(organized)) {
-        response += `📦 ${category}:\n`
-        items.forEach(item => response += `- ${item}\n`)
-        response += '\n'
-      }
-
-      if (outros.length > 0) {
-        response += `📦 Outros:\n`
-        outros.forEach(item => response += `- ${item}\n`)
-      }
-
-      return response.trim()
-
-    case 'status_check':
-      session.isCollectingList = true
-      session.listItems = []
-      return GetRandomBotResponse('organizing', lang)
+      const finalResponse = GetRandomBotResponse('finally', lang)
+      return `${finalResponse}\n\n${organized}`
   }
 
   if (session.isCollectingList) {
@@ -73,5 +54,4 @@ export async function HandleWebChatBot(
   }
 
   return GetRandomBotResponse('offTopic', lang)
-
 }
