@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/app.ts",
+    "migrations": "npx prisma migrate dev --name categories_and_items",
+    "seed": "ts-node src/services/seed-items.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fastify/cors": "^11.0.1",
     "@prisma/client": "^6.8.2",
+    "dotenv": "^16.5.0",
     "fastify": "^5.3.3",
     "fastify-cors": "^6.0.3",
     "ts-node-dev": "^2.0.0",
