@@ -1,7 +1,9 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import { config } from 'dotenv'
+
 import { WebChatRoutes } from './routes/web-chat-routes'
+import { MessageTelegramController} from './controller/telegram-controller'
 
 config()
 
@@ -13,6 +15,8 @@ async function StartServer() {
   })
 
   app.register(WebChatRoutes)
+  const telegramBot = MessageTelegramController()
+  console.log(`${telegramBot} is running`)
 
   const PORT = 3333
   
