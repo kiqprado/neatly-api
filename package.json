@@ -4,6 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
     "migrations": "npx prisma migrate dev --name categories_and_items",
     "seed": "ts-node src/services/seed-items.ts"
   },
@@ -20,13 +22,15 @@
     "fastify-cors": "^6.0.3",
     "node-telegram-bot-api": "^0.66.0",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3",
     "zod": "^3.25.42"
   },
   "devDependencies": {
-    "@types/node": "^22.15.24",
+    "@types/node": "^22.17.0",
     "@types/node-telegram-bot-api": "^0.64.8",
     "eslint": "^9.27.0",
-    "prisma": "^6.8.2"
+    "prisma": "^6.8.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
   }
 }
