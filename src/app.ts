@@ -29,7 +29,7 @@ async function StartServer() {
     await app.listen({ port: PORT, host: '0.0.0.0'})
     console.log(`Server Running on ${PORT}`)
   } catch (err) {
-    app.log(err)
+    app.log.error(err)
     process.exit(1)
   }
 }
