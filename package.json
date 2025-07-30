@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "generate": "npx prisma generate",
+  "dev": "tsx src/app.ts",
+  "build": "tsc",
+  "start": "node dist/app.js",
+
+  "migrate": "npx prisma migrate dev",
   "migrate:prod": "npx prisma migrate deploy",
-  "seed": "ts-node src/services/seed-items.ts",
-  "prestart": "npm run generate && npm run migrate:prod && npm run seed",
-  "start": "node dist/app.js"
+  "generate": "npx prisma generate",
+  "studio": "npx prisma studio",
+
+  "deploy": "npm run generate && npm run migrate:prod && npm run seed",
+  "seed": "ts-node src/services/seed-items.ts"
   },
   "keywords": [],
   "author": "",
