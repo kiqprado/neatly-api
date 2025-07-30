@@ -6,12 +6,15 @@
   "dev": "tsx src/app.ts",
   "build": "tsc",
   "start": "node dist/app.js",
+
   "migrate": "npx prisma migrate dev",
   "migrate:prod": "npx prisma migrate deploy",
-  "seed": "ts-node src/services/seed-items.ts",
   "generate": "npx prisma generate",
-  "studio": "npx prisma studio"
-},
+  "studio": "npx prisma studio",
+
+  "deploy": "npm run generate && npm run migrate:prod && npm run seed",
+  "seed": "ts-node src/services/seed-items.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
